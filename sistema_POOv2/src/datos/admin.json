@@ -1,0 +1,21 @@
+{
+    "nombre": "SINAC",
+    
+    "hábitats": [
+		"Zona Montañosa", 
+    	"Bosque Tropical", 
+    	"Manglar", 
+    	"Costas y Playas"
+    	
+    ],
+    
+    "especies": {
+		"Felino": 10,
+		"Ave": 20,
+		"Reptil": 10,
+		"Anfibio": 10,
+		"Pez": 10,
+		"Animal marino": 10,
+		"Flora": 30
+	}
+}
