@@ -1,25 +1,33 @@
 package graphic;
 
+import sistema.Habitat;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import java.awt.event.InputMethodListener;
+import java.util.Vector;
 import java.awt.event.InputMethodEvent;
 import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaPrincipal extends JFrame {
 
 	private JPanel contentPane;
-
-	public VentanaPrincipal() {
+	
+	JComboBox comboBox;
+	
+	public VentanaPrincipal(Vector<Habitat> habitatsVector) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 611, 373);
 		contentPane = new JPanel();
@@ -40,7 +48,7 @@ public class VentanaPrincipal extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("(Acciones disponibles es habitats existentes.)");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel_2.setForeground(new Color(248, 248, 255));
-		lblNewLabel_2.setBounds(107, 117, 274, 14);
+		lblNewLabel_2.setBounds(117, 117, 274, 14);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_1 = new JLabel("Habitat:");
@@ -50,21 +58,40 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		// ---------------- Buttons ---------------- //
-				JButton btnNewButton = new JButton("Acciones");
-				btnNewButton.setBackground(new Color(255, 182, 193));
-				btnNewButton.setBounds(292, 80, 89, 23);
-				contentPane.add(btnNewButton);
+		JButton btnNewButton = new JButton("Acciones");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String habitatSeleccionadoStr = (String) comboBox.getSelectedItem();
+				Habitat habitatSeleccionado = null;
+				
+				for (Habitat tmp : habitatsVector) {
+					if (tmp.getName() == habitatSeleccionadoStr) {
+						habitatSeleccionado = tmp;
+					}
+				}
+				
+				try {
+					AccionesHabitat frame = new AccionesHabitat(habitatSeleccionado);
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnNewButton.setBackground(new Color(255, 182, 193));
+		btnNewButton.setBounds(310, 80, 89, 23);
+		contentPane.add(btnNewButton);
 				
 		// Combobox de los habitats.
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		comboBox.setBackground(new Color(0, 128, 128));
-		comboBox.setBounds(107, 78, 175, 27);
+		comboBox.setBounds(107, 74, 193, 31);
 		contentPane.add(comboBox);
 		
-		
-		
-		
-		
-		
+		for (int i = 0; i < habitatsVector.size(); i++) {
+			comboBox.addItem(habitatsVector.elementAt(i).getName());
+		}
+	
 	}
 }

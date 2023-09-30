@@ -1,5 +1,7 @@
 package sistema;
 
+import java.util.Vector;
+
 import datos.LectorJson;
 import graphic.VentanaPrincipal;
 
@@ -15,16 +17,24 @@ public class Admin {
 		LectorJson parserDatosJason = new LectorJson(rutaJsonAdmin);
 		
 		// Creador de los habitats.
+		Vector<Habitat> habitatsVector = parserDatosJason.getHabitatsVector();
+		
+		/*
+		for (int i = 0; i < habitatsVector.size(); i++) {
+			System.out.println("Habitat: "+ habitatsVector.elementAt(i).nombreHabitat + ": "+ habitatsVector.elementAt(i).getEspecies()); 
+		}
+		
+		
+		for (Habitat habitatObj : habitatsVector) {
+			System.out.println(habitatObj.getName());
+		} 
+		*/
 		
 		// Main window
-		VentanaPrincipal ventanaMain = new VentanaPrincipal();
+		VentanaPrincipal ventanaMain = new VentanaPrincipal(habitatsVector);
 		ventanaMain.setVisible(true);
 		
 	}
-	
-	
-	
-	
 	
 	
 	
