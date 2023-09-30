@@ -19,11 +19,11 @@ public class Admin {
 		// Creador de los habitats.
 		Vector<Habitat> habitatsVector = parserDatosJason.getHabitatsVector();
 		
-		/*
+		/* Imprimir las especies de cada habitat. (depurar)
+
 		for (int i = 0; i < habitatsVector.size(); i++) {
 			System.out.println("Habitat: "+ habitatsVector.elementAt(i).nombreHabitat + ": "+ habitatsVector.elementAt(i).getEspecies()); 
 		}
-		
 		
 		for (Habitat habitatObj : habitatsVector) {
 			System.out.println(habitatObj.getName());
@@ -35,8 +35,6 @@ public class Admin {
 		ventanaMain.setVisible(true);
 		
 	}
-	
-	
 	
 	// Main metod.
 	public static void main(String[] args) {
