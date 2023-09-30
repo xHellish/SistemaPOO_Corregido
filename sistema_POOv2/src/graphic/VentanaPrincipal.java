@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import exeptions.ExeptionBenFarz;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -60,12 +63,15 @@ public class VentanaPrincipal extends JFrame {
 		// ---------------- Buttons ---------------- //
 		JButton btnNewButton = new JButton("Acciones");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) throws ExeptionBenFarz {
 				String habitatSeleccionadoStr = (String) comboBox.getSelectedItem();
 				Habitat habitatSeleccionado = null;
 				
 				for (Habitat tmp : habitatsVector) {
-					if (tmp.getName() == habitatSeleccionadoStr) {
+					if (tmp.getName() == habitatSeleccionadoStr && tmp.getName() == "") {
+						throw new ExeptionBenFarz("Nombre de Habitat vacío.");
+						
+					}else if (tmp.getName() == habitatSeleccionadoStr) {
 						habitatSeleccionado = tmp;
 					}
 				}

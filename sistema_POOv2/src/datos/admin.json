@@ -4,8 +4,9 @@
     "hábitats": [
 		"Zona Montañosa", 
     	"Bosque Tropical", 
-    	"Manglar", 
-    	"Costas y Playas"
+    	"Manglar",
+    	"Costas y Playas",
+    	""
     ],
     
     "especies": {
