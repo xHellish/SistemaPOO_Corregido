@@ -10,6 +10,13 @@ public class Especie {
 		this.porcentaje = porcentaje;
 	}
 	
+	public String getName() {
+		return nombre;
+	}
+	
+	public int getPorcent() {
+		return porcentaje;
+	}
 	
 
 }

@@ -1,5 +1,6 @@
 package graphic;
 
+import sistema.Especie;
 import sistema.Habitat;
 import java.awt.EventQueue;
 
@@ -16,13 +17,17 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import java.awt.event.InputMethodListener;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.awt.event.InputMethodEvent;
 import javax.swing.JComboBox;
 import java.awt.Color;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.GridLayout;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -91,13 +96,40 @@ public class VentanaPrincipal extends JFrame {
 		// Combobox de los habitats.
 		comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		comboBox.setBackground(new Color(0, 128, 128));
+		comboBox.setBackground(new Color(0, 139, 139));
 		comboBox.setBounds(107, 74, 193, 31);
 		contentPane.add(comboBox);
 		
 		for (int i = 0; i < habitatsVector.size(); i++) {
 			comboBox.addItem(habitatsVector.elementAt(i).getName());
 		}
-	
+		
+		// Panel.
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(47, 79, 79));
+		panel.setBounds(10, 146, 575, 177);
+		contentPane.add(panel);
+		panel.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		ArrayList<JLabel> labels = new ArrayList<>();
+		
+		// Agrega labels al JPanel
+		for (int i = 0; i < habitatsVector.size(); i++) {
+		    if (!habitatsVector.elementAt(i).getName().isEmpty()) {
+		        JLabel label = new JLabel("<html>" + habitatsVector.elementAt(i).getName() + "<br>");
+		        label.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		        label.setForeground(Color.WHITE);
+		        label.setHorizontalAlignment(SwingConstants.CENTER);
+		        label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+		        for (Especie especieTmp : habitatsVector.elementAt(i).getVectorEspecies()) {
+		            label.setText(label.getText() + "-" + especieTmp.getName() + " " + especieTmp.getPorcent() + "%" + "<br>");
+		        }
+
+		        label.setText(label.getText() + "</html>");
+
+		        panel.add(label);
+		    }
+		}
 	}
 }
