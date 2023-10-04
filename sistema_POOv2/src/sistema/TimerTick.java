@@ -1,6 +1,11 @@
 package sistema;
 
+
 import java.util.TimerTask;
+import java.util.Vector;
+
+import graphic.VentanaPrincipal;
+
 import java.util.Timer;
 
 public final class TimerTick {
@@ -14,6 +19,8 @@ public final class TimerTick {
             public void run() {
                 contadorTickEx++; 
                 System.out.println("Horas de ejecución: " + contadorTickEx);
+                
+                
             }
         };
         

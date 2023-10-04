@@ -2,6 +2,8 @@ package graphic;
 
 import sistema.Especie;
 import sistema.Habitat;
+import sistema.TimerTick;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -18,6 +20,8 @@ import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import java.awt.event.InputMethodListener;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 import java.awt.event.InputMethodEvent;
 import javax.swing.JComboBox;
@@ -32,12 +36,13 @@ import java.awt.GridLayout;
 public class VentanaPrincipal extends JFrame {
 
 	private JPanel contentPane;
-	
+	private JPanel panel;
 	JComboBox comboBox;
+	Vector<Habitat> _habitatsVector;
 	
 	public VentanaPrincipal(Vector<Habitat> habitatsVector) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 611, 373);
+		setBounds(100, 100, 611, 421);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(47, 79, 79));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -53,7 +58,7 @@ public class VentanaPrincipal extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("(Acciones disponibles es habitats existentes.)");
+		JLabel lblNewLabel_2 = new JLabel("(Acciones disponibles en habitats existentes.)");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel_2.setForeground(new Color(248, 248, 255));
 		lblNewLabel_2.setBounds(117, 117, 274, 14);
@@ -82,7 +87,7 @@ public class VentanaPrincipal extends JFrame {
 				}
 				
 				try {
-					AccionesHabitat frame = new AccionesHabitat(habitatSeleccionado);
+					AccionesHabitat frame = new AccionesHabitat(habitatSeleccionado, habitatsVector);
 					frame.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -90,7 +95,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		btnNewButton.setBackground(new Color(255, 182, 193));
-		btnNewButton.setBounds(310, 80, 89, 23);
+		btnNewButton.setBounds(310, 80, 114, 23);
 		contentPane.add(btnNewButton);
 				
 		// Combobox de los habitats.
@@ -105,11 +110,21 @@ public class VentanaPrincipal extends JFrame {
 		}
 		
 		// Panel.
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(new Color(47, 79, 79));
-		panel.setBounds(10, 146, 575, 177);
+		panel.setBounds(10, 146, 575, 225);
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JButton btnNewButton_1 = new JButton("Actualizar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actualizar(habitatsVector);
+			}
+		});
+		btnNewButton_1.setBackground(new Color(152, 251, 152));
+		btnNewButton_1.setBounds(434, 80, 117, 23);
+		contentPane.add(btnNewButton_1);
 		
 		ArrayList<JLabel> labels = new ArrayList<>();
 		
@@ -131,5 +146,65 @@ public class VentanaPrincipal extends JFrame {
 		        panel.add(label);
 		    }
 		}
+		
+		_habitatsVector = habitatsVector;
+		TimerTick();
 	}
+	
+	// Contador horas.
+	int contadorTickEx = 0;
+	
+	// Tread de ejecución en segundo plano.
+	public void TimerTick () {
+		Timer timer = new Timer();
+        TimerTask tarea = new TimerTask() {
+            @Override
+            public void run() {
+                contadorTickEx++; 
+                System.out.println("Horas de ejecución: " + contadorTickEx);
+                //actualizar(_habitatsVector);
+                
+            }
+        };
+        
+        timer.schedule(tarea, 1000, 1000); 
+	}
+	
+	// Actualizar ventana main.
+	public void actualizar(Vector<Habitat> habitatsVector) {
+	    // Limpiar el JComboBox actual
+	    comboBox.removeAllItems();
+
+	    // Agregar los nuevos elementos al JComboBox
+	    for (Habitat habitat : habitatsVector) {
+	        comboBox.addItem(habitat.getName());
+	    }
+
+	    // Limpiar el contenido actual del panel
+	    panel.removeAll();
+
+	    // Actualizar el contenido del panel con las etiquetas actualizadas
+	    for (Habitat habitat : habitatsVector) {
+	        if (!habitat.getName().isEmpty()) {
+	            JLabel label = new JLabel("<html>" + habitat.getName() + "<br>");
+	            label.setFont(new Font("Tahoma", Font.PLAIN, 16));
+	            label.setForeground(Color.WHITE);
+	            label.setHorizontalAlignment(SwingConstants.CENTER);
+	            label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+	            for (Especie especieTmp : habitat.getVectorEspecies()) {
+	                label.setText(label.getText() + "-" + especieTmp.getName() + " " + especieTmp.getPorcent() + "%" + "<br>");
+	            }
+
+	            label.setText(label.getText() + "</html>");
+
+	            panel.add(label);
+	        }
+	    }
+
+	    // Actualizar la ventana
+	    getContentPane().revalidate();
+	    getContentPane().repaint();
+	}
+
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 public class Habitat {
 	
 	String nombreHabitat;
@@ -35,5 +37,20 @@ public class Habitat {
 	public Vector<Especie> getVectorEspecies() {
 		return especiesVector;
 	}
-
+	
+	public void addEspecie(Especie especieNueva) {
+		especiesVector.add(especieNueva);
+	}
+	
+	public boolean deleteEspecie(String nombreEspecie) {
+		for (Especie tmp : especiesVector) {
+			if (tmp.getName().equals(nombreEspecie)) {
+				especiesVector.remove(tmp);
+				return true;
+			}
+		}
+		
+		JOptionPane.showMessageDialog(null, "Especie no existe",  "Error", JOptionPane.WARNING_MESSAGE);
+		return false;
+	}
 }	
