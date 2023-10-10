@@ -11,8 +11,7 @@ public class Admin {
 	
 	public Admin() {
 		
-		
-		
+
 		// Json Parser.
 		LectorJson parserDatosJason = new LectorJson(rutaJsonAdmin);
 		

@@ -7,5 +7,8 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/Hellish/Desktop/SistemaPOO_v2/sistema_POOv2/Libreries/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Hellish/Desktop/SistemaPOO_v2/sistema_POOv2/Libreries/jackson-annotations-2.15.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Hellish/Desktop/SistemaPOO_v2/sistema_POOv2/Libreries/jackson-core-2.15.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Hellish/Desktop/SistemaPOO_v2/sistema_POOv2/Libreries/jackson-databind-2.15.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

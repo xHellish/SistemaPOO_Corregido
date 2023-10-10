@@ -1,8 +1,11 @@
 package graphic;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import sistema.Especie;
 import sistema.Habitat;
-import sistema.TimerTick;
 
 import java.awt.EventQueue;
 
@@ -19,6 +22,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import java.awt.event.InputMethodListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,7 +47,7 @@ public class VentanaPrincipal extends JFrame {
 	
 	public VentanaPrincipal(Vector<Habitat> habitatsVector) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 611, 421);
+		setBounds(100, 100, 651, 421);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(47, 79, 79));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -112,7 +117,7 @@ public class VentanaPrincipal extends JFrame {
 		// Panel.
 		panel = new JPanel();
 		panel.setBackground(new Color(47, 79, 79));
-		panel.setBounds(10, 146, 575, 225);
+		panel.setBounds(10, 146, 615, 225);
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		
@@ -125,6 +130,17 @@ public class VentanaPrincipal extends JFrame {
 		btnNewButton_1.setBackground(new Color(152, 251, 152));
 		btnNewButton_1.setBounds(434, 80, 117, 23);
 		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("+");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AgregarHabitat agregarHabitat = new AgregarHabitat(habitatsVector);
+				agregarHabitat.setVisible(true);
+			}
+		});
+		btnNewButton_2.setBackground(new Color(0, 206, 209));
+		btnNewButton_2.setBounds(559, 75, 45, 32);
+		contentPane.add(btnNewButton_2);
 		
 		ArrayList<JLabel> labels = new ArrayList<>();
 		
@@ -148,26 +164,6 @@ public class VentanaPrincipal extends JFrame {
 		}
 		
 		_habitatsVector = habitatsVector;
-		TimerTick();
-	}
-	
-	// Contador horas.
-	int contadorTickEx = 0;
-	
-	// Tread de ejecución en segundo plano.
-	public void TimerTick () {
-		Timer timer = new Timer();
-        TimerTask tarea = new TimerTask() {
-            @Override
-            public void run() {
-                contadorTickEx++; 
-                System.out.println("Horas de ejecución: " + contadorTickEx);
-                //actualizar(_habitatsVector);
-                
-            }
-        };
-        
-        timer.schedule(tarea, 1000, 1000); 
 	}
 	
 	// Actualizar ventana main.
@@ -205,6 +201,7 @@ public class VentanaPrincipal extends JFrame {
 	    // Actualizar la ventana
 	    getContentPane().revalidate();
 	    getContentPane().repaint();
+	    
+	    
 	}
-
 }
