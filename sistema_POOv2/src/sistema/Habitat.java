@@ -10,10 +10,11 @@ public class Habitat {
 	
 	String nombreHabitat;
 	Map<String, Integer> especiesMapDist = new HashMap<>();
-	Vector<Especie> especiesVector = new Vector();
+	Vector<Especie> especiesVector = new Vector<Especie>();
 	
-	public Habitat(String nombreHabitat) {
+	public Habitat(String nombreHabitat, Vector<Especie> especiesVector) {
 		this.nombreHabitat = nombreHabitat;
+		this.especiesVector = especiesVector;
 	}
 	
 	public String getName() {
@@ -52,5 +53,13 @@ public class Habitat {
 		
 		JOptionPane.showMessageDialog(null, "Especie no existe",  "Error", JOptionPane.WARNING_MESSAGE);
 		return false;
+	}
+	
+	public boolean porcentajeDisponible(Especie especie) {
+		int sumaPorcentajes = 0;
+		for (Especie tmp : especiesVector) {
+			sumaPorcentajes = sumaPorcentajes + tmp.porcentaje;
+		}
+		return (sumaPorcentajes + especie.porcentaje) <= 100;
 	}
 }	
