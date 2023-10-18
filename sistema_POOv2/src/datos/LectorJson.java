@@ -1,12 +1,10 @@
 package datos;
 
-
-
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Vector;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.json.simple.JSONArray;
@@ -18,25 +16,14 @@ import sistema.Especie;
 import sistema.Habitat;
 
 public class LectorJson {
-    private Vector<Habitat> habitatsVector = new Vector<>();
+    Vector<Habitat> habitatsVector = new Vector<Habitat>();
 
     public LectorJson(String ubicacionJson) {
         jsonAdmin(ubicacionJson);
-        asignarEspeciesHabitat();
     }
 
     public Vector<Habitat> getHabitatsVector() {
         return habitatsVector;
-    }
-
-    private void asignarEspeciesHabitat() {
-        for (Habitat habitat : habitatsVector) {
-            Map<String, Integer> especiesMap = new HashMap<>();
-            for (Especie especie : habitat.getVectorEspecies()) {
-                especiesMap.put(especie.getName(), especie.getPorcent());
-            }
-            habitat.setEspecies(especiesMap);
-        }
     }
 
     private void jsonAdmin(String filePath) {

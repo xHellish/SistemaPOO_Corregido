@@ -24,15 +24,11 @@ public class EliminarEspecieController {
 	
 	private void handleBorrarEspecieClick() {
 		String especieEscrita = vista.getTexField();
-		boolean existe = modelo.borrarEspecie(especieEscrita);
+		boolean existe = modelo.borrarEspecie(modelo.getHabitat().getName(), especieEscrita);
 		
 		if(existe) {
 			System.out.println("Especie '"+ especieEscrita +"' eliminada exitosamente.");
 			vista.dispose();
 		}
-		
-		
-		
-		
 	}
 }

@@ -10,6 +10,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import java.awt.Color;
@@ -90,7 +93,6 @@ public class VentanaPrincipalView extends JFrame {
 		comboBox.setBackground(new Color(0, 139, 139));
 		comboBox.setBounds(107, 74, 193, 31);
 		contentPane.add(comboBox);
-		
 	}
 	
 	public JButton getAccionesButton() {
@@ -110,30 +112,26 @@ public class VentanaPrincipalView extends JFrame {
 	}
 	
 	public void construirVentana(Vector<Habitat> habitats) {
-		
+	    panel.removeAll();
 	    comboBox.removeAllItems();
 	    
+	    /*
+	    for (int i = 0; i < habitats.size(); i++) {
+	    	System.out.println("Habitat: "+ habitats.elementAt(i).getName() + ": "+ habitats.elementAt(i).getEspecies()); 
+	    }
+	    for (Habitat habitatObj : habitats) {
+	    	System.out.println(habitatObj.getName());
+	    } 
+	    */
+
+	    int numHabitats = habitats.size();
+	    panel.setLayout(new GridLayout(1, numHabitats)); // Una columna por hábitat y sus especies
+
 	    for (Habitat habitat : habitats) {
 	        if (!habitat.getName().isEmpty()) {
 	            comboBox.addItem(habitat.getName());
-	        }
-	    }
-	    panel.removeAll();
-	    panel.setLayout(new GridLayout(1, habitats.size()));
-	    
-	    for (Habitat habitat : habitats) {
-	        if (!habitat.getName().isEmpty()) {
-	            JPanel habitatPanel = new JPanel();
 	            
-	            int size;
-	            if (habitat.getVectorEspecies() == null) {
-	            	size = 0;	
-	            }else {
-	            	size = habitat.getVectorEspecies().size();
-	            }
-	            
-	            habitatPanel.setLayout(new GridLayout(size + 1, 1)); // Una fila por hábitat y una fila por cada especie
-
+	            JPanel habitatPanel = new JPanel(new GridLayout(habitat.getVectorEspecies().size() + 1, 1));
 	            JLabel habitatLabel = new JLabel(habitat.getName());
 	            habitatLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	            habitatLabel.setForeground(Color.white);
@@ -141,18 +139,22 @@ public class VentanaPrincipalView extends JFrame {
 	            habitatLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	            habitatPanel.setBackground(new Color(0x0B5345));
 	            habitatPanel.add(habitatLabel);
-	            
+
+	            Set<String> addedSpecies = new HashSet<>(); // Para rastrear especies ya agregadas en el habitat
+
 	            for (Especie especieTmp : habitat.getVectorEspecies()) {
-	                if (!especieTmp.getName().isEmpty()) {
+	                if (especieTmp != null && !especieTmp.getName().isEmpty() && addedSpecies.add(especieTmp.getName())) {
 	                    JLabel especieLabel = new JLabel("- " + especieTmp.getName() + " " + especieTmp.getPorcent() + "%");
 	                    especieLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	                    especieLabel.setForeground(Color.white);
 	                    habitatPanel.add(especieLabel);
 	                }
 	            }
+
 	            panel.add(habitatPanel);
 	        }
 	    }
+
 	    getContentPane().revalidate();
 	    getContentPane().repaint();
 	}

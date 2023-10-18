@@ -10,7 +10,6 @@ public class Admin {
 		VentanaPrincipalModel modelo = new VentanaPrincipalModel();
 		VentanaPrincipalView vista = new VentanaPrincipalView();
 		VentanaPrincipalController controller = new VentanaPrincipalController(modelo, vista);
-		
 	}
 	
 	// Main metod.
